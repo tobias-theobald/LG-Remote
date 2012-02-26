@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	private static String authKey = "DDJOFF";
+	private static String authKey = null;
 
 	public static void main(String[] args) throws UnknownHostException,
 			IOException, InterruptedException {
