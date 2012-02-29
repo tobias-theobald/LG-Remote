@@ -1,10 +1,8 @@
 package de.tobitheo.lgremote;
 
-import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -63,22 +61,6 @@ public class Main {
 			pane.add(button, c);
 			++i;
 		}
-//		button = new JButton("Button 2");
-//		c.gridx = 1;
-//		c.gridy = 0;
-//		pane.add(button, c);
-//
-//		button = new JButton("Button 3");
-//		c.gridx = 2;
-//		c.gridy = 0;
-//		pane.add(button, c);
-//
-//		button = new JButton("Long-Named Button 4");
-//		c.gridwidth = 3;
-//		c.gridx = 0;
-//		c.gridy = 1;
-//		pane.add(button, c);
-
 	}
 
 	private void show() {
