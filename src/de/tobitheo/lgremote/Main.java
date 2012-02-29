@@ -47,20 +47,331 @@ public class Main {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 0.5;
 		c.ipady = 10;
+		c.gridheight = 1;
 
+		button = new KeyButton(Key.POWER, "Power");
 		c.gridx = 0;
 		c.gridy = 0;
-		// pane.add(button, c);
+		c.gridwidth = 12;
+		button.addActionListener(al);
+		pane.add(button, c);
 
-		int i = 0;
-		for (Key key : Key.values()) {
-			button = new KeyButton(key);
-			c.gridx = i % 3;
-			c.gridy = i / 3;
-			button.addActionListener(al);
-			pane.add(button, c);
-			++i;
-		}
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.ENERGY, "Energy");
+		c.gridx = 0;
+		c.gridwidth = 3;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.AV_MODE, "AV Mode");
+		c.gridx = 3;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.INPUT, "Input");
+		c.gridx = 6;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.TV_RADIO, "TV/Radio");
+		c.gridx = 9;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.NUM_1, "1");
+		c.gridx = 0;
+		c.gridwidth = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.NUM_2, "2");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.NUM_3, "3");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.NUM_4, "4");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);
+		
+		button = new KeyButton(Key.NUM_5, "5");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.NUM_6, "6");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.NUM_7, "7");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.NUM_8, "8");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+		
+		button = new KeyButton(Key.NUM_9, "9");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.LIST, "List");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.NUM_0, "0");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.QUICK_VIEW, "Q.View");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.VOLUME_UP, "Vol+");
+		c.gridx = 0;
+		c.gridwidth = 4;
+		c.gridheight = 3;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.CHANNEL_UP, "Prog+");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.FAV_MARK_CHAR_NUM, "Mark/Fav");
+		c.gridx = 4;
+		c.gridheight = 2;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy += 2;
+		
+		button = new KeyButton(Key.THREE_D, "3D");
+		button.addActionListener(al);
+		pane.add(button, c);
+		
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.VOLUME_DOWN, "Vol-");
+		c.gridx = 0;
+		c.gridheight = 3;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.CHANNEL_DOWN, "Prog-");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.MUTE_DELETE, "Mute/Del");
+		c.gridx = 4;
+		c.gridheight = 2;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy += 2;
+		
+		button = new KeyButton(Key.PREMIUM, "Premium");
+		c.gridx = 0;
+		c.gridheight = 1;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.HOME, "Home");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.AT, "@");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.KEYPAD_UP, "^");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+		
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.KEYPAD_LEFT, "<");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);		
+		
+		button = new KeyButton(Key.KEYPAD_ENTER, "OK");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+		
+		button = new KeyButton(Key.KEYPAD_RIGHT, ">");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+		
+
+		c.gridy++;
+		
+		button = new KeyButton(Key.KEYPAD_DOWN, "v");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+		
+
+		c.gridy++;
+		
+		button = new KeyButton(Key.BACK, "Back");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);
+		
+		button = new KeyButton(Key.QUICK_MENU_3D_OPTIONS, "Q.Menu");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);
+
+		button = new KeyButton(Key.EXIT, "Exit");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.RED, "Red");
+		c.gridx = 0;
+		c.gridwidth = 3;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.GREEN, "Green");
+		c.gridx = 3;
+		button.addActionListener(al);
+		pane.add(button, c);		
+		
+		button = new KeyButton(Key.YELLOW, "Yellow");
+		c.gridx = 6;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.BLUE, "Blue");
+		c.gridx = 9;
+		button.addActionListener(al);
+		pane.add(button, c);		
+		
+		
+		c.gridy++;
+
+		button = new KeyButton(Key.TEXT, "Text");
+		c.gridx = 0;
+		c.gridwidth = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.TEXT_OPTIONS, "T.Options");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.SUBTITLE, "Subtitle");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.STOP_LIVE_TV, "Stop");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.PLAY, "Play");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.PAUSE, "Pause");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.REWIND, "Rewind");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.FAST_FORWARD, "F.Forward");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.RECORD, "Rec.");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		
+		c.gridy++;
+		
+		button = new KeyButton(Key.GUIDE, "Guide");
+		c.gridx = 0;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.INFO, "Info");
+		c.gridx = 4;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
+		button = new KeyButton(Key.RATIO, "Ratio");
+		c.gridx = 8;
+		button.addActionListener(al);
+		pane.add(button, c);		
+
 	}
 
 	private void show() {
