@@ -3,6 +3,7 @@ package de.tobitheo.lgremote;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -45,10 +46,11 @@ public class Main {
 		};
 
 		c.fill = GridBagConstraints.BOTH;
-		c.weightx = 0.5;
 		c.ipady = 10;
 		c.gridheight = 1;
-
+		c.insets = new Insets(2, 2, 2, 2);
+		c.anchor = GridBagConstraints.CENTER;
+		
 		button = new KeyButton(Key.POWER, "Power");
 		c.gridx = 0;
 		c.gridy = 0;
