@@ -6,21 +6,29 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import org.apache.http.client.ClientProtocolException;
 
 public class Main {
 
 	JFrame frame;
+	private final Connection conn;
 	
-	public Main() {
+	public Main(final Connection conn) {
+		this.conn = conn;
 
 		// Create and set up the window.
-		frame = new JFrame("GridBagLayoutDemo");
+		frame = new JFrame("LG Remote");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Set up the content pane.
@@ -39,17 +47,26 @@ public class Main {
 					throw new IllegalStateException(
 							"That was not a key button. This ActionListener ist only for key buttons.");
 				KeyButton kb = (KeyButton) o;
-				// TODO Proper key press handling (aka send the command to the
-				// TV)
-				System.out.println(kb.getKey().toString());
+				try {
+					conn.sendKeyCode(kb.getKey());
+				} catch (Exception e) {
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					e.printStackTrace(new PrintStream(baos));
+					JOptionPane.showMessageDialog(null,
+						    "Exception: " + e.getMessage() + "\n" + baos.toString(),
+						    "Exception while sending key code",
+						    JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		};
 
-		c.fill = GridBagConstraints.BOTH;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 10;
 		c.gridheight = 1;
 		c.insets = new Insets(2, 2, 2, 2);
 		c.anchor = GridBagConstraints.CENTER;
+		
+		
 		
 		button = new KeyButton(Key.POWER, "Power");
 		c.gridx = 0;
@@ -58,7 +75,7 @@ public class Main {
 		button.addActionListener(al);
 		pane.add(button, c);
 
-		
+
 		c.gridy++;
 
 		button = new KeyButton(Key.ENERGY, "Energy");
@@ -93,11 +110,13 @@ public class Main {
 
 		button = new KeyButton(Key.NUM_2, "2");
 		c.gridx = 4;
+		c.weightx = 1;
 		button.addActionListener(al);
 		pane.add(button, c);		
 
 		button = new KeyButton(Key.NUM_3, "3");
 		c.gridx = 8;
+		c.weightx = 0;
 		button.addActionListener(al);
 		pane.add(button, c);
 
@@ -283,6 +302,7 @@ public class Main {
 		button = new KeyButton(Key.RED, "Red");
 		c.gridx = 0;
 		c.gridwidth = 3;
+		
 		button.addActionListener(al);
 		pane.add(button, c);		
 
@@ -372,8 +392,9 @@ public class Main {
 		button = new KeyButton(Key.RATIO, "Ratio");
 		c.gridx = 8;
 		button.addActionListener(al);
-		pane.add(button, c);		
-
+		pane.add(button, c);	
+		
+		
 	}
 
 	private void show() {
@@ -387,7 +408,63 @@ public class Main {
 		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new Main().show();
+				Connection conn = new Connection();
+				String host = null;
+				PreferencesManager prefs = new PreferencesManager();
+				try {
+					host = conn.mDnsDiscovery();
+				} catch (SocketTimeoutException e) {
+					JOptionPane.showMessageDialog(null,
+							"The TV dicovery via mDNS timed out",
+							"Discovery Timeout",
+							JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				} catch (IOException e) {
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					e.printStackTrace(new PrintStream(baos));
+					JOptionPane.showMessageDialog(null,
+						    "Exception: " + e.getMessage() + "\n" + baos.toString(),
+						    "Exception while mDNS discovery",
+						    JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+				if (host == null)
+					return;
+				String authKey = prefs.getAuthKeyOfHost(host);
+				if (authKey == null) {
+					try {
+						conn.showAuthKey();
+					} catch (Exception e) {
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						e.printStackTrace(new PrintStream(baos));
+						JOptionPane.showMessageDialog(null,
+							    "Exception: " + e.getMessage() + "\n" + baos.toString(),
+							    "Exception while authentication",
+							    JOptionPane.ERROR_MESSAGE);
+						System.exit(1);
+					}
+					authKey = (String)JOptionPane.showInputDialog(
+		                    null,
+		                    "Unknown host, enter Key displayed on the TV",
+		                    "Enter Key",
+		                    JOptionPane.QUESTION_MESSAGE);
+					if (authKey == null)
+						System.exit(0);
+					prefs.setAuthKeyOfHost(host, authKey);
+				}
+				try {
+					conn.authenticate(authKey);
+				} catch (Exception e) {
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					e.printStackTrace(new PrintStream(baos));
+					JOptionPane.showMessageDialog(null,
+						    "Exception: " + e.getMessage() + "\n" + baos.toString(),
+						    "Exception while authentication",
+						    JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+					
+				new Main(conn).show();
 			}
 		});
 	}

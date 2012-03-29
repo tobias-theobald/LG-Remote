@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,7 +25,7 @@ public class Connection {
 	private String host;
 	private int sessionKey;
 
-	public String mDnsDiscovery() throws IOException {
+	public String mDnsDiscovery() throws IOException, SocketTimeoutException {
 		DatagramSocket socket = new DatagramSocket();
 		byte[] buffer = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
 				0x00, 0x00, 0x00, 0x0e, 0x5f, 0x6c, 0x67, 0x5f, 0x64, 0x74,
@@ -38,13 +39,12 @@ public class Connection {
 		socket.send(sendPacket);
 
 		buffer = new byte[256];
+		socket.setSoTimeout(1000);
 		DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
 		socket.receive(receivePacket);
 		socket.close();
 		
-		host = receivePacket.getAddress().toString().substring(1);
-
-		return host;
+		return host = receivePacket.getAddress().toString().substring(1);
 	}
 	
 	public void showAuthKey() throws ClientProtocolException, IOException {
